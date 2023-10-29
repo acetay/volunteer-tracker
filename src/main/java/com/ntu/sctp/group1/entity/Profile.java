@@ -20,18 +20,12 @@ public class Profile {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Id
     private Integer id;
+
+    @Column(name = "volunteered_program")
+    private String volunteered_program = "";
     
-    @Column(name = "interests")
-    private String interests = "";
-
-    @Column(name = "hobbies")
-    private String hobbies = "";
-
-    @Column(name = "professional_experience")
-    private String professionalExperience = "";
-
-    @Column(name = "profile_picture")
-    private String profilePicture = "";
+    @Column(name = "volunteered_hours")
+    private Number volunteeredHours = 0 ;
 
     @Column(name="created_at", updatable= false)
     Timestamp createdAt = new Timestamp(new Date().getTime());

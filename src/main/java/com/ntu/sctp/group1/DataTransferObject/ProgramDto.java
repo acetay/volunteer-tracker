@@ -14,8 +14,9 @@ public class ProgramDto {
     private String name;
     private String date;
     private String description;
-    private String photo = "";
+//    private String photo = "";
     private String timeOfProgram;
-    private Integer volunteersRequired;
+    private String locationOfProgram;
+//    private Integer volunteersRequired;
     private Integer noOfVolunteers;
 }

@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
     @CrossOrigin(origins= {"*"}, maxAge = 86400, allowCredentials = "false" )
     @RestController
@@ -52,15 +51,15 @@ import java.util.Map;
             }
         }
 
-        @GetMapping("/admin/volunteers/search")
-        public ResponseEntity<List<Volunteer>> searchByParams (@RequestParam Map<String, String> params) {
-            try {
-                return ResponseEntity.ok().body(volunteerService.searchByParams(params));
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                return ResponseEntity.badRequest().body(null);
-            }
-        }
+//        @GetMapping("/admin/volunteers/search")
+//        public ResponseEntity<List<Volunteer>> searchByParams (@RequestParam Map<String, String> params) {
+//            try {
+//                return ResponseEntity.ok().body(volunteerService.searchByParams(params));
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                return ResponseEntity.badRequest().body(null);
+//            }
+//        }
 
 
 

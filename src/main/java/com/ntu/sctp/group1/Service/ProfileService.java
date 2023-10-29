@@ -24,16 +24,14 @@ public class ProfileService {
 
 
 
-    public List<Profile> getAllProfiles(String uid) throws NoProfileFoundExceptions {
-        if (checkIfUserIsAdmin(uid)) {
-            List<Profile> allProfiles = profileRepository.findAll();
-            if(allProfiles.size() == 0) {
-                throw new NoProfileFoundExceptions("There are no profiles found in repository");
-            }
-            return allProfiles;
+    public List<Profile> getAllProfiles() throws NoProfileFoundExceptions {
+        List<Profile> allProfiles = profileRepository.findAll();
+        if(allProfiles.isEmpty()) {
+            throw new NoProfileFoundExceptions("There are no profiles found in the repository");
         }
-        return null;
+        return allProfiles;
     }
+
 
 
     public Profile getProfileById(Integer id) throws NoProfileFoundExceptions {
@@ -60,19 +58,19 @@ public class ProfileService {
             throw new NoProfileFoundExceptions("now profile found");
         }
         Profile existingProfile = findProfile.get();
-        existingProfile.setHobbies(newVolunteerProfile.getHobbies());
-        existingProfile.setInterests(newVolunteerProfile.getInterests());
-        existingProfile.setProfessionalExperience(newVolunteerProfile.getProfessionalExperience());
-        existingProfile.setProfilePicture(newVolunteerProfile.getProfilePicture());
+        existingProfile.setVolunteered_program(newVolunteerProfile.getVolunteered_program());
+        existingProfile.setVolunteeredHours(newVolunteerProfile.getVolunteeredHours());
+//        existingProfile.setProfessionalExperience(newVolunteerProfile.getProfessionalExperience());
+//        existingProfile.setProfilePicture(newVolunteerProfile.getProfilePicture());
 
         return profileRepository.save(existingProfile);
     }
 
-    public boolean checkIfUserIsAdmin(String uid) {
-        Optional<UserCredentials> userOptional = userRepo.findByUid(uid);
-        if (userOptional.isEmpty()) return false;
-        return userOptional.get().getRole().equals(Role.ADMIN);
-    }
+//    public boolean checkIfUserIsAdmin(String uid) {
+//        Optional<UserCredentials> userOptional = userRepo.findByUid(uid);
+//        if (userOptional.isEmpty()) return false;
+//        return userOptional.get().getRole().equals(Role.ADMIN);
+//    }
 
 }
 

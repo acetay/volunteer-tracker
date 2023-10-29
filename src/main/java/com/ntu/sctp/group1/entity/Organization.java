@@ -7,7 +7,6 @@ import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Set;
 
 
 @AllArgsConstructor
@@ -16,25 +15,19 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name="volunteer")
-public class Volunteer {
-
+@Table(name="organization")
+public class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NonNull
     @NotBlank(message = "Name cannot be blank!")
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "organization", nullable = false)
+    private String organization;
 
-    @NonNull
-    @NotBlank(message = "Email cannot be blank!")
-    @Column(name = "email", nullable = false)
-    private String email;
-
-    @Column(name = "organization")
-    private String individual;
+    @Column(name = "number of volunteers")
+    private Number volunteers;
 
     @Column(name = "created_at", updatable = false)
     Timestamp createdAt = new Timestamp(new Date().getTime());
@@ -50,18 +43,5 @@ public class Volunteer {
     @JsonIgnore
     @OneToOne(mappedBy = "volunteer", cascade = CascadeType.ALL)
     private Profile profile;
-
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL)
-//    List<Availability> availabilities;
-
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "enrolment_volunteer",
-            joinColumns = @JoinColumn(name = "volunteer_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "enrolment_id", referencedColumnName = "id")
-    )
-    private Set<Enrolment> enrolments;
 
 }

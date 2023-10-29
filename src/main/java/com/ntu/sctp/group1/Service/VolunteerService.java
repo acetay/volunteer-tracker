@@ -1,14 +1,18 @@
 package com.ntu.sctp.group1.Service;
 
 import com.ntu.sctp.group1.Exceptions.NoVolunteerFoundExceptions;
-import com.ntu.sctp.group1.entity.*;
+import com.ntu.sctp.group1.entity.Enrolment;
+import com.ntu.sctp.group1.entity.Profile;
+import com.ntu.sctp.group1.entity.Volunteer;
 import com.ntu.sctp.group1.repository.ProfileRepository;
-import com.ntu.sctp.group1.repository.UserRepository;
 import com.ntu.sctp.group1.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class VolunteerService {
@@ -21,7 +25,7 @@ public class VolunteerService {
 
     //Keep this
     @Autowired
-    UserRepository userRepo;
+//    UserRepository userRepo;
 
 
     
@@ -46,44 +50,44 @@ public class VolunteerService {
 
    
    
-    public List<Volunteer> searchByParams (Map <String, String> params) throws NoVolunteerFoundExceptions {
-        System.out.println(params);
-        List<Volunteer> volunteers = volunteerRepository.findAll();
-        if (volunteers.size() == 0) {
-            throw new NoVolunteerFoundExceptions("No volunteers meeting this criteria found");
-        }
-        List<Volunteer> filteredList = new ArrayList<>();
-
-        if(params.isEmpty() || (params.get("education").isEmpty() && params.get("language").isEmpty() && params.get("experience").isEmpty())) {
-            filteredList = volunteers;
-        } else {
-            if (params.containsKey("experience")) {
-                filteredList = volunteers.stream()
-                        .filter((volunteer) -> volunteer.getEducation().equalsIgnoreCase(params.get("education")) ||
-                                volunteer.getLanguage().equalsIgnoreCase(params.get("language")) ||
-                                volunteer.getLanguage2().equalsIgnoreCase(params.get("language")) ||
-                                volunteer.getLanguage3().equalsIgnoreCase(params.get("language")) ||
-                                volunteer.getPastExperience().contains(params.get("experience")))
-                        .toList();
-            } else {
-                filteredList = volunteers.stream()
-                        .filter((volunteer) -> volunteer.getEducation().equalsIgnoreCase(params.get("education")) ||
-                                volunteer.getLanguage().equalsIgnoreCase(params.get("language")) ||
-                                volunteer.getLanguage2().equalsIgnoreCase(params.get("language")) ||
-                                volunteer.getLanguage3().equalsIgnoreCase(params.get("language")))
-                        .toList();
-            }
-        }
+//    public List<Volunteer> searchByParams (Map <String, String> params) throws NoVolunteerFoundExceptions {
+//        System.out.println(params);
+//        List<Volunteer> volunteers = volunteerRepository.findAll();
+//        if (volunteers.size() == 0) {
+//            throw new NoVolunteerFoundExceptions("No volunteers meeting this criteria found");
+//        }
+//        List<Volunteer> filteredList = new ArrayList<>();
+//
+//        if(params.isEmpty() || (params.get("education").isEmpty() && params.get("language").isEmpty() && params.get("experience").isEmpty())) {
+//            filteredList = volunteers;
+//        } else {
+//            if (params.containsKey("experience")) {
+//                filteredList = volunteers.stream()
+//                        .filter((volunteer) -> volunteer.getEducation().equalsIgnoreCase(params.get("education")) ||
+//                                volunteer.getLanguage().equalsIgnoreCase(params.get("language")) ||
+//                                volunteer.getLanguage2().equalsIgnoreCase(params.get("language")) ||
+//                                volunteer.getLanguage3().equalsIgnoreCase(params.get("language")) ||
+//                                volunteer.getPastExperience().contains(params.get("experience")))
+//                        .toList();
+//            } else {
+//                filteredList = volunteers.stream()
+//                        .filter((volunteer) -> volunteer.getEducation().equalsIgnoreCase(params.get("education")) ||
+//                                volunteer.getLanguage().equalsIgnoreCase(params.get("language")) ||
+//                                volunteer.getLanguage2().equalsIgnoreCase(params.get("language")) ||
+//                                volunteer.getLanguage3().equalsIgnoreCase(params.get("language")))
+//                        .toList();
+//            }
+//        }
         // Removed on 26 Apr
 //        if(filteredList.size() == 0) {
 //            throw new NoVolunteerFoundExceptions("No results found!");
 //        }
 
-        return filteredList;
-    }
+//        return filteredList;
+//    }
 
 
-    public Volunteer createVolunteer(Volunteer newVolunteer, String uid) throws NoVolunteerFoundExceptions {
+    public Volunteer createVolunteer(Volunteer newVolunteer) throws NoVolunteerFoundExceptions {
         if (newVolunteer.getName().isEmpty()) {
             throw new NoVolunteerFoundExceptions("Volunteer's name and email cannot be empty");
         }
@@ -93,13 +97,13 @@ public class VolunteerService {
             throw new NoVolunteerFoundExceptions("Failed to save volunteer");
         }
         // Keep this
-        UserCredentials user = new UserCredentials();
-        user.setVolunteerId(newPerson.getId());
-        user.setUsername(newPerson.getEmail());
-        user.setUid(uid);
-        user.setTokenIsActive(false);
-        user.setRole(Role.USER);
-        userRepo.save(user);
+//        UserCredentials user = new UserCredentials();
+//        user.setVolunteerId(newPerson.getId());
+//        user.setUsername(newPerson.getEmail());
+//        user.setUid(uid);
+//        user.setTokenIsActive(false);
+//        user.setRole(Role.USER);
+//        userRepo.save(user);
 
         Profile newProfile = new Profile();
         newProfile.setVolunteer(newPerson);
@@ -113,17 +117,17 @@ public class VolunteerService {
             Volunteer existingVolunteer = volunteer.get();
             existingVolunteer.setName(updatedVolunteer.getName());
             existingVolunteer.setEmail(updatedVolunteer.getEmail());
-            existingVolunteer.setContact(updatedVolunteer.getContact());
-            existingVolunteer.setAddress(updatedVolunteer.getAddress());
-            existingVolunteer.setEducation(updatedVolunteer.getEducation());
-            existingVolunteer.setOccupation(updatedVolunteer.getOccupation());
-            existingVolunteer.setLanguage(updatedVolunteer.getLanguage());
-            existingVolunteer.setLanguage2(updatedVolunteer.getLanguage2());
-            existingVolunteer.setLanguage3(updatedVolunteer.getLanguage3());
-            existingVolunteer.setPastExperience(updatedVolunteer.getPastExperience());
-            existingVolunteer.setDateOfBirth(updatedVolunteer.getDateOfBirth());
-            existingVolunteer.setReferrerName(updatedVolunteer.getReferrerName());
-            existingVolunteer.setReferrerContact(updatedVolunteer.getReferrerContact());
+//            existingVolunteer.setContact(updatedVolunteer.getContact());
+//            existingVolunteer.setAddress(updatedVolunteer.getAddress());
+//            existingVolunteer.setEducation(updatedVolunteer.getEducation());
+//            existingVolunteer.setOccupation(updatedVolunteer.getOccupation());
+//            existingVolunteer.setLanguage(updatedVolunteer.getLanguage());
+//            existingVolunteer.setLanguage2(updatedVolunteer.getLanguage2());
+//            existingVolunteer.setLanguage3(updatedVolunteer.getLanguage3());
+//            existingVolunteer.setPastExperience(updatedVolunteer.getPastExperience());
+//            existingVolunteer.setDateOfBirth(updatedVolunteer.getDateOfBirth());
+//            existingVolunteer.setReferrerName(updatedVolunteer.getReferrerName());
+//            existingVolunteer.setReferrerContact(updatedVolunteer.getReferrerContact());
 
             return volunteerRepository.save(existingVolunteer);
         } else {

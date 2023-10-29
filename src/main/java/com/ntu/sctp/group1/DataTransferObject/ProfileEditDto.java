@@ -11,8 +11,6 @@ import lombok.Setter;
 @Setter
 public class ProfileEditDto {
 
-    private String interests;
-    private String hobbies;
-    private String professionalExperience;
-    private String profilePicture;
+    private String volunteered_program;
+    private Number volunteeredHours;
 }

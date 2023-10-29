@@ -27,8 +27,11 @@ public class Enrolment {
     @Column(name = "date")
     private LocalDate date;
 
-    @Column(name = "time_of_program")
-    private String timeOfProgram;
+    @Column(name = "number_of_hours")
+    private Number hours;
+
+    @Column(name = "location_of_program")
+    private String locationOfProgram;
 
     @OneToOne
     @JoinColumn(name = "program_id")
@@ -40,4 +43,10 @@ public class Enrolment {
             joinColumns = @JoinColumn(name = "enrolment_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "volunteer_id", referencedColumnName = "id"))
     private Set<Volunteer> volunteers;
+
+    public void setLocationOfProgram(String locationOfProgram) {
+    }
+
+    public void setTimeOfProgram(String timeOfProgram) {
+    }
 }

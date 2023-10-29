@@ -50,11 +50,12 @@ public class ProgramService {
         Program newProg = new Program();
         newProg.setDescription(program.getDescription());
         newProg.setDate(reformatDate);
-        newProg.setPhoto(program.getPhoto());
+//        newProg.setPhoto(program.getPhoto());
         newProg.setTimeOfProgram(program.getTimeOfProgram());
+        newProg.setLocationOfProgram(program.getLocationOfProgram());
         newProg.setName(program.getName());
-        newProg.setVolunteersRequired(program.getVolunteersRequired());
-        newProg.setNoOfVolunteers(program.getNoOfVolunteers());
+//        newProg.setVolunteersRequired(program.getVolunteersRequired());
+//        newProg.setNoOfVolunteers(program.getNoOfVolunteers());
         Program savedProgram = programRepository.save(newProg);
 
         // Create an empty Enrolment associated with the saved program
@@ -62,6 +63,7 @@ public class ProgramService {
         enrolment.setProgram(savedProgram);
         enrolment.setDate(savedProgram.getDate());
         enrolment.setTimeOfProgram(savedProgram.getTimeOfProgram());
+        enrolment.setLocationOfProgram(savedProgram.getLocationOfProgram());
         enrolment.setVolunteers(new HashSet<>());
         enrolmentRepository.save(enrolment);
 
@@ -79,10 +81,11 @@ public class ProgramService {
             existingProgram.setName(updatedProgram.getName());
             existingProgram.setDate(reformatDate);
             existingProgram.setTimeOfProgram(updatedProgram.getTimeOfProgram());
+            existingProgram.setLocationOfProgram(updatedProgram.getLocationOfProgram());
             existingProgram.setDescription(updatedProgram.getDescription());
-            existingProgram.setPhoto(updatedProgram.getPhoto());
+//            existingProgram.setPhoto(updatedProgram.getPhoto());
             existingProgram.setNoOfVolunteers(updatedProgram.getNoOfVolunteers());
-            existingProgram.setVolunteersRequired(updatedProgram.getVolunteersRequired());
+//            existingProgram.setVolunteersRequired(updatedProgram.getVolunteersRequired());
             existingEnrolment.setDate(reformatDate);
             existingEnrolment.setTimeOfProgram(updatedProgram.getTimeOfProgram());
             enrolmentRepository.save(existingEnrolment);

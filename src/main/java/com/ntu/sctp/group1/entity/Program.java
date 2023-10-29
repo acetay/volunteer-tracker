@@ -31,14 +31,11 @@ public class Program {
     @Column(name="description")
     private String description;
 
-    @Column(name="photo")
-    private String photo = "";
-
     @Column(name = "time_of_program")
     private String timeOfProgram;
 
-    @Column(name = "volunteers_required")
-    private Integer volunteersRequired;
+    @Column(name = "location_of_program")
+    private String locationOfProgram;
 
     @Column(name = "number_of_volunteers")
     private Integer noOfVolunteers;
